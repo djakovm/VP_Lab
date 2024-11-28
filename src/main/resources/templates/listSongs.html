@@ -15,6 +15,16 @@
         <span th:text="${error}"></span>
     </div>
     <main>
+        <form action='/songs' method="get">
+            <p>Filter songs by genre:</p>
+            <label>
+                <select name="genre">
+                    <option th:value="${'All'}" th:text="${'All'}"></option>
+                    <option th:each="genre : ${genres}" th:value="${genre}" th:text="${genre}"></option>
+                </select>
+            </label>
+            <button type="submit">Filter</button>
+        </form>
         <!-- Song Table -->
         <table class="table table-bordered table-striped">
             <thead class="table-primary">
@@ -30,17 +40,17 @@
             </thead>
             <tbody>
             <tr th:each="song : ${songs}">
-                <td th:text="${song.title}"></td>
-                <td th:text="${song.trackId}"></td>
-                <td th:text="${song.genre}"></td>
-                <td th:text="${song.releaseYear}"></td>
-                <td th:text="${song.album != null ? song.album.name : 'No album'}"></td>
-                <td th:text="${song.rating != null && song.getRatings().size() != 0 ? song.rating : 'No ratings yet'}"></td>
-                <td>
-                    <a th:href="@{'/songs/edit/' + ${song.id}}" class="btn btn-sm btn-primary">Edit</a>
-                    <a th:href="@{'/songs/delete/' + ${song.id}}" class="btn btn-sm btn-danger"
-                       onclick="return confirm('Are you sure?')">Delete</a>
-                </td>
+            <td th:text="${song.title}"></td>
+            <td th:text="${song.trackId}"></td>
+            <td th:text="${song.genre}"></td>
+            <td th:text="${song.releaseYear}"></td>
+            <td th:text="${song.album != null ? song.album.name : 'No album'}"></td>
+            <td th:text="${song.rating != null && song.getRatings().size() != 0 ? song.rating : 'No ratings'}"></td>
+            <td>
+                <a th:href="@{'/songs/edit/' + ${song.id}}" class="btn btn-sm btn-primary">Edit</a>
+                <a th:href="@{'/songs/delete/' + ${song.id}}" class="btn btn-sm btn-danger"
+                   onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
             </tr>
             </tbody>
         </table>

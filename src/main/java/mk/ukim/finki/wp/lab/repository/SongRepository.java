@@ -50,4 +50,12 @@ public class SongRepository {
         return song;
     }
 
+    public List<String> getGenres(){
+        return DataHolder.songs.stream().map(Song::getGenre).distinct().toList();
+    }
+
+    public List<Song> getSongsByGenre(String genre){
+        return DataHolder.songs.stream().filter(s -> s.getGenre().equals(genre)).toList();
+    }
+
 }

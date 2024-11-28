@@ -18,4 +18,7 @@ public interface SongService {
     void deleteSongById(Long id);
 
     void saveSong(String title, String trackId, String genre, int releaseYear, Long albumId);
+    List<String> getGenres();
+
+    List<Song> getSongsByGenre(String genre);
 }
