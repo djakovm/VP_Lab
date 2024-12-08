@@ -35,6 +35,7 @@ public class ArtistController {
         }
 
         song.addRating(rating);
+        songService.addSong(song);
 
         List<Artist> artists = artistService.listArtists();
 

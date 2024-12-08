@@ -1,5 +1,6 @@
 package mk.ukim.finki.wp.lab.service.Impl;
 
+import jakarta.transaction.Transactional;
 import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
 import mk.ukim.finki.wp.lab.model.Album;
 import mk.ukim.finki.wp.lab.model.Artist;
@@ -37,11 +38,14 @@ public class SongServiceImpl implements SongService {
         }
         return artist;
     }
-
+    @Transactional
     @Override
     public Song findByTrackId(String trackId) {
-        return songRepository.findByTrackId(trackId);
+        return songRepository.findByTrackId(trackId)
+                .orElseThrow(() -> new IllegalArgumentException("Song not found for trackId: " + trackId));
     }
+
+
 
     @Override
     public Optional<Song> findById(Long id) {
@@ -95,6 +99,11 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public List<Song> getSongsByGenre(String genre) {
-        return songRepository.getSongsByGenre(genre);
+        return songRepository.findAllByGenre(genre);
+    }
+
+    @Override
+    public List<Song> getSongsByAlbum(Long albumId) {
+        return songRepository.findAllByAlbum_Id(albumId);
     }
 }

@@ -1,8 +1,10 @@
 package mk.ukim.finki.wp.lab.controller;
 
+import mk.ukim.finki.wp.lab.model.Album;
 import mk.ukim.finki.wp.lab.model.Artist;
 import mk.ukim.finki.wp.lab.model.Song;
 import mk.ukim.finki.wp.lab.repository.AlbumRepository;
+import mk.ukim.finki.wp.lab.service.AlbumService;
 import mk.ukim.finki.wp.lab.service.ArtistService;
 import mk.ukim.finki.wp.lab.service.SongService;
 import org.springframework.stereotype.Controller;
@@ -18,27 +20,39 @@ public class SongController {
     public final SongService songService;
     public final AlbumRepository albumRepository;
     public final ArtistService artistService;
+    public final AlbumService albumService;
 
-    public SongController(SongService songService, AlbumRepository albumRepository, ArtistService artistService) {
+    public SongController(SongService songService, AlbumRepository albumRepository, ArtistService artistService, AlbumService albumService) {
         this.songService = songService;
         this.albumRepository = albumRepository;
         this.artistService = artistService;
+        this.albumService = albumService;
     }
 
     @GetMapping
-    public String getSongsPage(@RequestParam(required = false) String error, @RequestParam(required = false) String genre, Model model) {
+    public String getSongsPage(
+            @RequestParam(required = false) String error,
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) Long albumId,
+            Model model) {
         List<Song> songs;
-        if (genre != null && !genre.equals("All")) {
+        if (albumId != null) {
+            songs = songService.getSongsByAlbum(albumId);
+        } else if (genre != null && !genre.equals("All")) {
             songs = songService.getSongsByGenre(genre);
         } else {
             songs = songService.listSongs();
         }
+
         model.addAttribute("songs", songs);
         model.addAttribute("error", error);
         List<String> genres = songService.getGenres();
         model.addAttribute("genres", genres);
+        List<Album> albums = albumService.findAll();
+        model.addAttribute("albums", albums);
         return "listSongs";
     }
+
 
 
     @GetMapping("/add")
@@ -63,7 +77,7 @@ public class SongController {
     @GetMapping("/edit/{songId}")
     public String getEditSongForm(@PathVariable Long songId, Model model) {
         Optional<Song> song = songService.findById(songId);
-        if (song.isEmpty() || !song.get().getId().equals(songId) || songId == null) {
+        if (song.isEmpty() || !song.get().getId().equals(songId)) {
             return "redirect:/songs?error=Song not found";
         }
 
