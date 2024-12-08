@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.lab.service;
+package mk.ukim.finki.wp.lab.service.Impl;
 
 import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
 import mk.ukim.finki.wp.lab.model.Album;
@@ -6,6 +6,7 @@ import mk.ukim.finki.wp.lab.model.Artist;
 import mk.ukim.finki.wp.lab.model.Song;
 import mk.ukim.finki.wp.lab.repository.AlbumRepository;
 import mk.ukim.finki.wp.lab.repository.SongRepository;
+import mk.ukim.finki.wp.lab.service.SongService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,12 +30,17 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public Artist addArtistToSong(Artist artist, Song song) {
-        return songRepository.addArtistToSong(artist, song);
+
+        if (!song.getPerformers().contains(artist)) {
+            song.getPerformers().add(artist);
+            songRepository.save(song);
+        }
+        return artist;
     }
 
     @Override
     public Song findByTrackId(String trackId) {
-        return songRepository.findBtTrackId(trackId);
+        return songRepository.findByTrackId(trackId);
     }
 
     @Override
@@ -44,20 +50,28 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public void addSong(Song song) {
-        songRepository.addSong(song);
+        songRepository.save(song);
     }
 
     @Override
     public void editSong(Long songId, String title, String trackId, String genre, int releaseYear, Long albumId) {
-        Optional<Album> album = albumRepository.findById(albumId);
-        Optional<Song> song = songRepository.editSong(songId, title, trackId, genre, releaseYear);
-        song.get().setAlbum(album.get());
+        Song song = songRepository.findById(songId)
+                .orElseThrow(() -> new IllegalArgumentException("Song with ID " + songId + " not found"));
+        Album album = albumRepository.findById(albumId)
+                .orElseThrow(() -> new IllegalArgumentException("Album with ID " + albumId + " not found"));
+
+        song.setTitle(title);
+        song.setTrackId(trackId);
+        song.setGenre(genre);
+        song.setReleaseYear(releaseYear);
+        song.setAlbum(album);
+
+        songRepository.save(song);
     }
 
     @Override
     public void deleteSongById(Long id) {
-        Song song = songRepository.findById(id).orElse(null);
-        songRepository.removeSong(song);
+        songRepository.deleteById(id);
     }
 
     @Override
@@ -71,6 +85,6 @@ public class SongServiceImpl implements SongService {
         song.setRatings(new ArrayList<>());
         song.setPerformers(new ArrayList<>());
 
-        songRepository.addSong(song);
+        songRepository.save(song);
     }
 }

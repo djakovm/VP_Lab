@@ -1,17 +1,15 @@
 package mk.ukim.finki.wp.lab.model;
-
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Optional;
 
+@Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +20,9 @@ public class Song {
     int releaseYear;
     @ManyToOne
     Album album;
+    @ManyToMany
     List<Artist> performers;
+    @ElementCollection
     List<Integer> ratings;
 
     public Song(String trackId, String title, String genre, int releaseYear) {

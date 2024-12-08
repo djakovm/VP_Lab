@@ -1,14 +1,15 @@
-package mk.ukim.finki.wp.lab.service;
+package mk.ukim.finki.wp.lab.service.Impl;
 
 import mk.ukim.finki.wp.lab.model.Artist;
 import mk.ukim.finki.wp.lab.repository.ArtistRepository;
+import mk.ukim.finki.wp.lab.service.ArtistService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ArtistServiceImpl implements ArtistService{
+public class ArtistServiceImpl implements ArtistService {
 
     public final ArtistRepository artistRepository;
 

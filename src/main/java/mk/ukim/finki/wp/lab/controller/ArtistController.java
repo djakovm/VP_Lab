@@ -28,20 +28,16 @@ public class ArtistController {
             @RequestParam String trackId,
             @RequestParam int rating,
             Model model) {
-        // Find song by track ID
         Song song = songService.findByTrackId(trackId);
         if (song == null) {
             model.addAttribute("error", "Song not found for trackId: " + trackId);
             return "error";
         }
 
-        // Add rating to the song
         song.addRating(rating);
 
-        // Fetch all available artists
         List<Artist> artists = artistService.listArtists();
 
-        // Pass data to the view
         model.addAttribute("artists", artists);
         model.addAttribute("song", song);
 
@@ -53,7 +49,6 @@ public class ArtistController {
             @RequestParam String trackId,
             @RequestParam Long artistId,
             Model model) {
-        // Find song and artist
         Song song = songService.findByTrackId(trackId);
         Optional<Artist> artist = artistService.findById(artistId);
 
@@ -62,10 +57,8 @@ public class ArtistController {
             return "error";
         }
 
-        // Add the artist to the song
         song.addPerformer(artist.get());
 
-        // Redirect back to the song details
         return "redirect:/songs";
     }
 }
