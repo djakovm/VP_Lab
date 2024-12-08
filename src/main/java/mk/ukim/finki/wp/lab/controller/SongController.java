@@ -26,12 +26,20 @@ public class SongController {
     }
 
     @GetMapping
-    public String getSongsPage(@RequestParam(required = false) String error, Model model) {
-        List<Song> songs = songService.listSongs();
+    public String getSongsPage(@RequestParam(required = false) String error, @RequestParam(required = false) String genre, Model model) {
+        List<Song> songs;
+        if (genre != null && !genre.equals("All")) {
+            songs = songService.getSongsByGenre(genre);
+        } else {
+            songs = songService.listSongs();
+        }
         model.addAttribute("songs", songs);
         model.addAttribute("error", error);
+        List<String> genres = songService.getGenres();
+        model.addAttribute("genres", genres);
         return "listSongs";
     }
+
 
     @GetMapping("/add")
     public String getAddSongForm(Model model) {

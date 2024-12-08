@@ -87,4 +87,14 @@ public class SongServiceImpl implements SongService {
 
         songRepository.save(song);
     }
+
+    @Override
+    public List<String> getGenres() {
+        return songRepository.getGenres();
+    }
+
+    @Override
+    public List<Song> getSongsByGenre(String genre) {
+        return songRepository.getSongsByGenre(genre);
+    }
 }
