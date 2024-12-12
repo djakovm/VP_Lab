@@ -86,7 +86,7 @@ public class SongServiceImpl implements SongService {
         Song song = new Song(title, trackId, genre, releaseYear);
         song.setId(DataHolder.songIdGenerator.getAndIncrement());
         song.setAlbum(album);
-        song.setRatings(new ArrayList<>());
+        song.setReviews(new ArrayList<>());
         song.setPerformers(new ArrayList<>());
 
         songRepository.save(song);

@@ -1,7 +1,9 @@
 package mk.ukim.finki.wp.lab.controller;
 
 import mk.ukim.finki.wp.lab.model.Artist;
+import mk.ukim.finki.wp.lab.model.Review;
 import mk.ukim.finki.wp.lab.model.Song;
+import mk.ukim.finki.wp.lab.repository.ReviewRepository;
 import mk.ukim.finki.wp.lab.service.ArtistService;
 import mk.ukim.finki.wp.lab.service.SongService;
 import org.springframework.stereotype.Controller;
@@ -17,24 +19,32 @@ public class ArtistController {
 
     private final ArtistService artistService;
     private final SongService songService;
+    private final ReviewRepository reviewRepository;
 
-    public ArtistController(ArtistService artistService, SongService songService) {
+    public ArtistController(ArtistService artistService, SongService songService, ReviewRepository reviewRepository) {
         this.artistService = artistService;
         this.songService = songService;
+        this.reviewRepository = reviewRepository;
     }
 
     @GetMapping
     public String getArtistsForSong(
             @RequestParam String trackId,
             @RequestParam int rating,
+            @RequestParam String review,
             Model model) {
         Song song = songService.findByTrackId(trackId);
         if (song == null) {
             model.addAttribute("error", "Song not found for trackId: " + trackId);
             return "error";
         }
+        Review newReview = new Review();
+        newReview.setRating((double) rating);
+        newReview.setDescription(review);
 
-        song.addRating(rating);
+        reviewRepository.save(newReview);
+
+        song.addReview(newReview);
         songService.addSong(song);
 
         List<Artist> artists = artistService.listArtists();

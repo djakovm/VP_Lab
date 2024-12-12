@@ -22,8 +22,8 @@ public class Song {
     Album album;
     @ManyToMany
     List<Artist> performers;
-    @ElementCollection
-    List<Integer> ratings;
+    @OneToMany
+    List<Review> reviews;
 
     public Song(String trackId, String title, String genre, int releaseYear) {
         this.trackId = trackId;
@@ -32,12 +32,12 @@ public class Song {
         this.releaseYear = releaseYear;
     }
 
-    public void addRating(int rating) {
-        ratings.add(rating);
+    public void addReview(Review review) {
+        reviews.add(review);
     }
 
     public double getRating() {
-        return ratings.stream().mapToInt(r -> r).average().orElse(0.0);
+        return reviews.stream().map(Review::getRating).mapToDouble(r -> r).average().orElse(0.0);
     }
 
     public void addPerformer(Artist artist) {

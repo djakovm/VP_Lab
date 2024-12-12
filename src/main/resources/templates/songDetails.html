@@ -20,6 +20,13 @@
                 <span th:text="${artist.firstName}"></span> <span th:text="${artist.lastName}"></span>
             </li>
         </ul>
+        <h3>Reviews:</h3>
+        <ul>
+            <li th:each="review : ${song.getReviews()}">
+                <span th:text="${review.rating}"></span> <span th:text="${review.description}"></span>
+            </li>
+        </ul>
+
     </div>
     <div class="mt-4">
         <a href="/songs" class="btn btn-secondary">Back to Songs</a>
