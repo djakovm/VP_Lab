@@ -73,6 +73,10 @@ public class SongController {
         return "redirect:/songs";
     }
 
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/songs";
+    }
 
     @GetMapping("/edit/{songId}")
     public String getEditSongForm(@PathVariable Long songId, Model model) {
