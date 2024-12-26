@@ -69,18 +69,8 @@ public class WebSecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user1 = User.builder()
-                .username("elena.atanasoska")
-                .password(passwordEncoder.encode("ea"))
-                .roles("USER")
-                .build();
-        UserDetails user2 = User.builder()
-                .username("darko.sasanski")
-                .password(passwordEncoder.encode("ds"))
-                .roles("USER")
-                .build();
-        UserDetails user3 = User.builder()
-                .username("ana.todorovska")
-                .password(passwordEncoder.encode("at"))
+                .username("user")
+                .password(passwordEncoder.encode("user"))
                 .roles("USER")
                 .build();
         UserDetails admin = User.builder()
@@ -89,7 +79,7 @@ public class WebSecurityConfig {
                 .roles("ADMIN")
                 .build();
 
-        return new InMemoryUserDetailsManager(user1, user2, user3, admin);
+        return new InMemoryUserDetailsManager(user1, admin);
     }
 
 }

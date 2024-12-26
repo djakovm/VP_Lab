@@ -84,6 +84,7 @@
         </div>
 
         <!-- Add Rating Form -->
+        <div sec:authorize="hasRole('USER')">
         <h2 class="mt-5 text-success">Rate a Song</h2>
         <form action="/artist" method="get" class="p-3 border rounded bg-white">
             <div class="mb-3">
@@ -102,6 +103,7 @@
             </div>
             <button type="submit" class="btn btn-success">Submit Rating</button>
         </form>
+        </div>
         <br>
     </main>
 </div>

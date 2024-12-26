@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-//@RequestMapping("/")
+@RequestMapping("/")
 public class HomeController {
 
 
-    @GetMapping("/")
+//    @GetMapping("/")
     public String home() {
         return "redirect:/songs";
     }
