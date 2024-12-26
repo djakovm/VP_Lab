@@ -54,5 +54,15 @@ public class DataHolder {
         songRepository.save(new Song(songIdGenerator.getAndIncrement(), "3", "Time", "Progressive Rock", 1973, darkSide, new ArrayList<>(), new ArrayList<>()));
         songRepository.save(new Song(songIdGenerator.getAndIncrement(), "4", "Alive", "Grunge", 1991, ten, new ArrayList<>(), new ArrayList<>()));
         songRepository.save(new Song(songIdGenerator.getAndIncrement(), "5", "Starlight", "Alternative Rock", 2006, blackHoles, new ArrayList<>(), new ArrayList<>()));
+        songRepository.save(new Song(songIdGenerator.getAndIncrement(), "6", "Come As You Are", "Grunge", 1991, nevermind, new ArrayList<>(), new ArrayList<>()));
+        songRepository.save(new Song(songIdGenerator.getAndIncrement(), "7", "Somebody to Love", "Rock", 1976, nightAtTheOpera, new ArrayList<>(), new ArrayList<>()));
+        songRepository.save(new Song(songIdGenerator.getAndIncrement(), "8", "Money", "Progressive Rock", 1973, darkSide, new ArrayList<>(), new ArrayList<>()));
+        songRepository.save(new Song(songIdGenerator.getAndIncrement(), "9", "Even Flow", "Grunge", 1991, ten, new ArrayList<>(), new ArrayList<>()));
+        songRepository.save(new Song(songIdGenerator.getAndIncrement(), "10", "Supermassive Black Hole", "Alternative Rock", 2006, blackHoles, new ArrayList<>(), new ArrayList<>()));
+        songRepository.save(new Song(songIdGenerator.getAndIncrement(), "11", "Lithium", "Grunge", 1991, nevermind, new ArrayList<>(), new ArrayList<>()));
+        songRepository.save(new Song(songIdGenerator.getAndIncrement(), "12", "Love of My Life", "Rock", 1975, nightAtTheOpera, new ArrayList<>(), new ArrayList<>()));
+        songRepository.save(new Song(songIdGenerator.getAndIncrement(), "13", "Brain Damage", "Progressive Rock", 1973, darkSide, new ArrayList<>(), new ArrayList<>()));
+        songRepository.save(new Song(songIdGenerator.getAndIncrement(), "14", "Black", "Grunge", 1991, ten, new ArrayList<>(), new ArrayList<>()));
+        songRepository.save(new Song(songIdGenerator.getAndIncrement(), "15", "Knights of Cydonia", "Alternative Rock", 2006, blackHoles, new ArrayList<>(), new ArrayList<>()));
     }
 }
